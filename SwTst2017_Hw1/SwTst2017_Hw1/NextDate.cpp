@@ -11,23 +11,26 @@ string getNextDate(const int & iMonth, const int & iDay, const int & iYear)
 	int iNextDay = iDay + 1;
 	stringstream ss;
 
-	if (iYear < 1812 || iYear > 2012) {
-		return string("Value of the year is not in the range of [1812, 2012]");
-	}
+	
 
 	if (iMonth < 1 || iMonth > 12) {
 		return string("Value of the month is not in the range of [1, 12]");
 	}
 
-	if (iDay < 1 || iDay > 31) {
-		return string("Value of the day is not in the range of [1, 31]");
+	if (iYear < 1812 || iYear > 2012) {
+		return string("Value of the year is not in the range of [1812, 2012]");
 	}
+
+	int iMaxDay = (iMonth == 2 && isLeapYear(iYear)) ? 29 : FINAL_DAY[iMonth];
+	if (iDay < 1 || iDay > iMaxDay) {
+		return string("Value of the day is not in the range of [1, " + to_string(iMaxDay)+ "]");
+	}
+
+	
 
 
 	if (iMonth == 2 && iDay == 28 && isLeapYear(iYear)) {//special case
-		ss << iYear << ", 2, 29";
-		ss >> sAns;
-		return sAns;
+		return "2/29/" + to_string(iYear);
 	}
 
 	//iNextDay++;
