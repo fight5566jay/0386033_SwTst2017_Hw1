@@ -148,8 +148,9 @@ TEST_F(NextDateTest, NextDateTestStrongRobust) {
 	EXPECT_EQ("Value of the day is not in the range of [1, 30]", getNextDateString(4, 0, 1999)) << "SR Test 1-2 failed";
 	EXPECT_EQ("Value of the day is not in the range of [1, 31]", getNextDateString(1, 32, 1999)) << "SR Test 1-3 failed";
 	EXPECT_EQ("Value of the day is not in the range of [1, 28]", getNextDateString(2, 29, 1999)) << "SR Test 1-4 failed";
-
-	EXPECT_EQ("Value of the day is not in the range of [1, 29]", getNextDateString(2, 30, 2004)) << "SR Test 1-5 failed";
+	EXPECT_EQ("3/1/1992", getNextDateString(2, 29, 1992)) << "SR Test 1-5 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 28]", getNextDateString(2, 29, 1900)) << "SR Test 1-6 failed";
+	EXPECT_EQ("3/1/2000", getNextDateString(2, 29, 2000)) << "SR Test 1-7 failed";
 
 	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 30, 2004)) << "SR Test 2-1 failed";
 	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 30, 2004)) << "SR Test 2-2 failed";
