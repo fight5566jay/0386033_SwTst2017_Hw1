@@ -116,75 +116,134 @@ TEST_F(NextDateTest, NextDateTestWeakRobust) {
 
 TEST_F(NextDateTest, NextDateTestStrongNormal) {
 	//strong normal
-	//class of month: {month has 30 days, month has 31 days, February}
-	//class of day: {1~28, 29, 30, 31}
+	//class of month: {month has 30 days, month has 31 days except December, February, December}
+	//class of day: {1~27, 28, 29, 30, 31}
 	//class of year: {2000, 100x, 4x, else}
-	EXPECT_EQ("4/29/1999", getNextDateString(4, 28, 1999)) << "SN Test 1 failed";
-	EXPECT_EQ("1/29/1999", getNextDateString(1, 28, 1999)) << "SN Test 2 failed";
-	EXPECT_EQ("3/1/1999", getNextDateString(2, 28, 1999)) << "SN Test 3 failed";
+	
+	EXPECT_EQ("1/2/2000", getNextDateString(1, 1, 2000)) << "SN Test 1-1-1 failed";
+	EXPECT_EQ("4/2/2000", getNextDateString(4, 1, 2000)) << "SN Test 1-1-2 failed";
+	EXPECT_EQ("2/2/2000", getNextDateString(2, 1, 2000)) << "SN Test 1-1-3 failed";
+	EXPECT_EQ("12/2/2000", getNextDateString(12, 1, 2000)) << "SN Test 1-1-4 failed";
+	EXPECT_EQ("1/29/2000", getNextDateString(1, 28, 2000)) << "SN Test 1-2-1 failed";
+	EXPECT_EQ("4/29/2000", getNextDateString(4, 28, 2000)) << "SN Test 1-2-2 failed";
+	EXPECT_EQ("2/29/2000", getNextDateString(2, 28, 2000)) << "SN Test 1-2-3 failed";
+	EXPECT_EQ("12/29/2000", getNextDateString(12, 28, 2000)) << "SN Test 1-2-4 failed";
+	EXPECT_EQ("1/30/2000", getNextDateString(1, 29, 2000)) << "SN Test 1-3-1 failed";
+	EXPECT_EQ("4/30/2000", getNextDateString(4, 29, 2000)) << "SN Test 1-3-2 failed";
+	EXPECT_EQ("3/1/2000", getNextDateString(2, 29, 2000)) << "SN Test 1-3-3 failed";
+	EXPECT_EQ("12/30/2000", getNextDateString(12, 29, 2000)) << "SN Test 1-3-4 failed";
+	EXPECT_EQ("1/31/2000", getNextDateString(1, 30, 2000)) << "SN Test 1-4-1 failed";
+	EXPECT_EQ("5/1/2000", getNextDateString(4, 30, 2000)) << "SN Test 1-4-2 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 29]", getNextDateString(2, 30, 2000)) << "SN Test 1-4-3 failed";
+	EXPECT_EQ("12/31/2000", getNextDateString(12, 30, 2000)) << "SN Test 1-4-4 failed";
+	EXPECT_EQ("2/1/2000", getNextDateString(1, 31, 2000)) << "SN Test 1-5-1 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 30]", getNextDateString(4, 31, 2000)) << "SN Test 1-5-2 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 29]", getNextDateString(2, 31, 2000)) << "SN Test 1-5-3 failed";
+	EXPECT_EQ("1/1/2001", getNextDateString(12, 31, 2000)) << "SN Test 1-5-4 failed";
 
-	EXPECT_EQ("4/30/2004", getNextDateString(4, 29, 2004)) << "SN Test 4 failed";
-	EXPECT_EQ("1/30/2004", getNextDateString(1, 29, 2004)) << "SN Test 5 failed";
-	EXPECT_EQ("3/1/2004", getNextDateString(2, 29, 2004)) << "SN Test 6 failed";
-	//EXPECT_EQ("Value of the day is not in the range of [1, 28]", getNextDateString(2, 29, 1999)) << "SN Test failed";//illegal
+	EXPECT_EQ("1/2/1900", getNextDateString(1, 1, 1900)) << "SN Test 2-1-1 failed";
+	EXPECT_EQ("4/2/1900", getNextDateString(4, 1, 1900)) << "SN Test 2-1-2 failed";
+	EXPECT_EQ("2/2/1900", getNextDateString(2, 1, 1900)) << "SN Test 2-1-3 failed";
+	EXPECT_EQ("12/2/1900", getNextDateString(12, 1, 1900)) << "SN Test 2-1-4 failed";
+	EXPECT_EQ("1/29/1900", getNextDateString(1, 28, 1900)) << "SN Test 2-2-1 failed";
+	EXPECT_EQ("4/29/1900", getNextDateString(4, 28, 1900)) << "SN Test 2-2-2 failed";
+	EXPECT_EQ("3/1/1900", getNextDateString(2, 28, 1900)) << "SN Test 2-2-3 failed";
+	EXPECT_EQ("12/29/1900", getNextDateString(12, 28, 1900)) << "SN Test 2-2-4 failed";
+	EXPECT_EQ("1/30/1900", getNextDateString(1, 29, 1900)) << "SN Test 2-3-1 failed";
+	EXPECT_EQ("4/30/1900", getNextDateString(4, 29, 1900)) << "SN Test 2-3-2 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 28]", getNextDateString(2, 29, 1900)) << "SN Test 2-3-3 failed";
+	EXPECT_EQ("12/30/1900", getNextDateString(12, 29, 1900)) << "SN Test 2-3-4 failed";
+	EXPECT_EQ("1/31/1900", getNextDateString(1, 30, 1900)) << "SN Test 2-4-1 failed";
+	EXPECT_EQ("5/1/1900", getNextDateString(4, 30, 1900)) << "SN Test 2-4-2 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 28]", getNextDateString(2, 30, 1900)) << "SN Test 2-4-3 failed";
+	EXPECT_EQ("12/31/1900", getNextDateString(12, 30, 1900)) << "SN Test 2-4-4 failed";
+	EXPECT_EQ("2/1/1900", getNextDateString(1, 31, 1900)) << "SN Test 2-5-1 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 30]", getNextDateString(4, 31, 1900)) << "SN Test 2-5-2 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 28]", getNextDateString(2, 31, 1900)) << "SN Test 2-5-3 failed";
+	EXPECT_EQ("1/1/1901", getNextDateString(12, 31, 1900)) << "SN Test 2-5-4 failed";
 
-	EXPECT_EQ("5/1/2004", getNextDateString(4, 30, 2004)) << "SN Test 7 failed";
-	EXPECT_EQ("1/31/2004", getNextDateString(1, 30, 2004)) << "SN Test 8 failed";
-	//EXPECT_EQ("Value of the day is not in the range of [1, 28]", getNextDateString(2, 30, 2004)) << "SN Test failed";//illegal
+	EXPECT_EQ("1/2/2004", getNextDateString(1, 1, 2004)) << "SN Test 3-1-1 failed";
+	EXPECT_EQ("4/2/2004", getNextDateString(4, 1, 2004)) << "SN Test 3-1-2 failed";
+	EXPECT_EQ("2/2/2004", getNextDateString(2, 1, 2004)) << "SN Test 3-1-3 failed";
+	EXPECT_EQ("12/2/2004", getNextDateString(12, 1, 2004)) << "SN Test 3-1-4 failed";
+	EXPECT_EQ("1/29/2004", getNextDateString(1, 28, 2004)) << "SN Test 3-2-1 failed";
+	EXPECT_EQ("4/29/2004", getNextDateString(4, 28, 2004)) << "SN Test 3-2-2 failed";
+	EXPECT_EQ("2/29/2004", getNextDateString(2, 28, 2004)) << "SN Test 3-2-3 failed";
+	EXPECT_EQ("12/29/2004", getNextDateString(12, 28, 2004)) << "SN Test 3-2-4 failed";
+	EXPECT_EQ("1/30/2004", getNextDateString(1, 29, 2004)) << "SN Test 3-3-1 failed";
+	EXPECT_EQ("4/30/2004", getNextDateString(4, 29, 2004)) << "SN Test 3-3-2 failed";
+	EXPECT_EQ("3/1/2004", getNextDateString(2, 29, 2004)) << "SN Test 3-3-3 failed";
+	EXPECT_EQ("12/30/2004", getNextDateString(12, 29, 2004)) << "SN Test 3-3-4 failed";
+	EXPECT_EQ("1/31/2004", getNextDateString(1, 30, 2004)) << "SN Test 3-4-1 failed";
+	EXPECT_EQ("5/1/2004", getNextDateString(4, 30, 2004)) << "SN Test 3-4-2 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 29]", getNextDateString(2, 30, 2004)) << "SN Test 3-4-3 failed";
+	EXPECT_EQ("12/31/2004", getNextDateString(12, 30, 2004)) << "SN Test 3-4-4 failed";
+	EXPECT_EQ("2/1/2004", getNextDateString(1, 31, 2004)) << "SN Test 3-5-1 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 30]", getNextDateString(4, 31, 2004)) << "SN Test 3-5-2 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 29]", getNextDateString(2, 31, 2004)) << "SN Test 3-5-3 failed";
+	EXPECT_EQ("1/1/2005", getNextDateString(12, 31, 2004)) << "SN Test 3-5-4 failed";
 
-	EXPECT_EQ("2/1/2004", getNextDateString(1, 31, 2004)) << "SN Test 9 failed";
-	//EXPECT_EQ("Value of the day is not in the range of [1, 30]", getNextDateString(1, 31, 2004)) << "SN Test 8 failed";
-	//EXPECT_EQ("Value of the day is not in the range of [1, 28]", getNextDateString(2, 30, 2004)) << "SN Test failed";//illegal
+	EXPECT_EQ("1/2/1999", getNextDateString(1, 1, 1999)) << "SN Test 4-1-1 failed";
+	EXPECT_EQ("4/2/1999", getNextDateString(4, 1, 1999)) << "SN Test 4-1-2 failed";
+	EXPECT_EQ("2/2/1999", getNextDateString(2, 1, 1999)) << "SN Test 4-1-3 failed";
+	EXPECT_EQ("12/2/1999", getNextDateString(12, 1, 1999)) << "SN Test 4-1-4 failed";
+	EXPECT_EQ("1/29/1999", getNextDateString(1, 28, 1999)) << "SN Test 4-2-1 failed";
+	EXPECT_EQ("4/29/1999", getNextDateString(4, 28, 1999)) << "SN Test 4-2-2 failed";
+	EXPECT_EQ("3/1/1999", getNextDateString(2, 28, 1999)) << "SN Test 4-2-3 failed";
+	EXPECT_EQ("12/29/1999", getNextDateString(12, 28, 1999)) << "SN Test 4-2-4 failed";
+	EXPECT_EQ("1/30/1999", getNextDateString(1, 29, 1999)) << "SN Test 4-3-1 failed";
+	EXPECT_EQ("4/30/1999", getNextDateString(4, 29, 1999)) << "SN Test 4-3-2 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 28]", getNextDateString(2, 29, 1999)) << "SN Test 4-3-3 failed";
+	EXPECT_EQ("12/30/1999", getNextDateString(12, 29, 1999)) << "SN Test 4-3-4 failed";
+	EXPECT_EQ("1/31/1999", getNextDateString(1, 30, 1999)) << "SN Test 4-4-1 failed";
+	EXPECT_EQ("5/1/1999", getNextDateString(4, 30, 1999)) << "SN Test 4-4-2 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 28]", getNextDateString(2, 30, 1999)) << "SN Test 4-4-3 failed";
+	EXPECT_EQ("12/31/1999", getNextDateString(12, 30, 1999)) << "SN Test 4-4-4 failed";
+	EXPECT_EQ("2/1/1999", getNextDateString(1, 31, 1999)) << "SN Test 4-5-1 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 30]", getNextDateString(4, 31, 1999)) << "SN Test 4-5-2 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 28]", getNextDateString(2, 31, 1999)) << "SN Test 4-5-3 failed";
+	EXPECT_EQ("1/1/2000", getNextDateString(12, 31, 1999)) << "SN Test 4-5-4 failed";
 
-	EXPECT_EQ("1/1/2005", getNextDateString(12, 31, 2004)) << "SN Test 10 failed";
 }
 
 TEST_F(NextDateTest, NextDateTestStrongRobust) {
 	//strong robust
-	//class of month: {month has 30 days, month has 31 days, February}
-	//class of day: {1~28, 29, 30, 31}
-	//class of year: {2000, 100x, 4x, else}
-	EXPECT_EQ("Value of the day is not in the range of [1, 30]", getNextDateString(4, 31, 1999)) << "SR Test 1-1 failed";
-	EXPECT_EQ("Value of the day is not in the range of [1, 30]", getNextDateString(4, 0, 1999)) << "SR Test 1-2 failed";
-	EXPECT_EQ("Value of the day is not in the range of [1, 31]", getNextDateString(1, 32, 1999)) << "SR Test 1-3 failed";
-	EXPECT_EQ("Value of the day is not in the range of [1, 28]", getNextDateString(2, 29, 1999)) << "SR Test 1-4 failed";
-	EXPECT_EQ("3/1/1992", getNextDateString(2, 29, 1992)) << "SR Test 1-5 failed";
-	EXPECT_EQ("Value of the day is not in the range of [1, 28]", getNextDateString(2, 29, 1900)) << "SR Test 1-6 failed";
-	EXPECT_EQ("3/1/2000", getNextDateString(2, 29, 2000)) << "SR Test 1-7 failed";
+	//boundary check
+	//month: [1, 12]
+	//day: [1, 31]
+	//year: [1812, 2012]
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 31, 2000)) << "SR Test 2-1-1 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 31, 2000)) << "SR Test 3-1-1 failed";
 
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 30, 2004)) << "SR Test 2-1 failed";
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 30, 2004)) << "SR Test 2-2 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 31]", getNextDateString(12, 0, 2000)) << "SR Test 1-2-1 failed";
+	EXPECT_EQ("Value of the day is not in the range of [1, 31]", getNextDateString(12, 32, 2000)) << "SR Test 1-3-1 failed";
 
-	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(1, 30, 1811)) << "SR Test 3-1 failed";
-	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(12, 30, 2013)) << "SR Test 3-2 failed";
+	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(12, 31, 1811)) << "SR Test 1-1-2 failed";
+	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(12, 31, 2013)) << "SR Test 1-1-3 failed";
 
-	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(4, 31, 1811)) << "SR Test 4-1 failed";
-	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(4, 0, 1811)) << "SR Test 4-2 failed";
-	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(1, 32, 1811)) << "SR Test 4-3 failed";
-	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(2, 29, 1811)) << "SR Test 4-4 failed";
-	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(4, 31, 2013)) << "SR Test 4-5 failed";
-	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(4, 0, 2013)) << "SR Test 4-6 failed";
-	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(1, 32, 2013)) << "SR Test 4-7 failed";
-	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(2, 29, 2013)) << "SR Test 4-8 failed";
+	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(12, 0, 1811)) << "SR Test 1-2-2 failed";
+	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(12, 32, 1811)) << "SR Test 1-3-2 failed";
+	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(12, 0, 2013)) << "SR Test 1-2-3 failed";
+	EXPECT_EQ("Value of the year is not in the range of [1812, 2012]", getNextDateString(12, 32, 2013)) << "SR Test 1-3-3 failed";
 
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 30, 1811)) << "SR Test 5-1 failed";
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 30, 1811)) << "SR Test 5-2 failed";
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 30, 2013)) << "SR Test 5-3 failed";
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 30, 2013)) << "SR Test 5-4 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 12, 1811)) << "SR Test 2-1-2 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 12, 1811)) << "SR Test 3-1-2 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 12, 2013)) << "SR Test 2-1-3 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 12, 2013)) << "SR Test 3-1-3 failed";
 
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 0, 1999)) << "SR Test 6-1 failed";
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 32, 1999)) << "SR Test 6-2 failed";
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 0, 1999)) << "SR Test 6-3 failed";
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 32, 1999)) << "SR Test 6-4 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 0, 2000)) << "SR Test 2-2-1 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 32, 2000)) << "SR Test 2-3-1 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 0, 2000)) << "SR Test 3-2-1 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 32, 2000)) << "SR Test 3-3-1 failed";
 
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 0, 1811)) << "SR Test 7-1 failed";
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 32, 1811)) << "SR Test 7-2 failed";
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 0, 1811)) << "SR Test 7-3 failed";
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 32, 1811)) << "SR Test 7-4 failed";
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 0, 2013)) << "SR Test 7-5 failed";
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 32, 2013)) << "SR Test 7-6 failed";
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 0, 2013)) << "SR Test 7-7 failed";
-	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 32, 2013)) << "SR Test 7-8 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 0, 1811)) << "SR Test 2-2-2 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 32, 1811)) << "SR Test 2-3-2 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 0, 1811)) << "SR Test 3-2-2 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 32, 1811)) << "SR Test 3-3-2 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 0, 2013)) << "SR Test 2-2-3 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(0, 32, 2013)) << "SR Test 2-3-3 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 0, 2013)) << "SR Test 3-2-3 failed";
+	EXPECT_EQ("Value of the month is not in the range of [1, 12]", getNextDateString(13, 32, 2013)) << "SR Test 3-3-3 failed";
 }
 
 TEST(CommisionTest, CommisionTestWeakNormal) {
